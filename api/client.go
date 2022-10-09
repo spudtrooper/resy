@@ -20,6 +20,9 @@ var (
 	noUserCreds = flag.Bool("no_user_creds", false, "Don't use user creds event if it exists")
 )
 
+// TODO: need to make genopts regex more flexible, need to have "--function Base" exactly here, which isn't great
+//go:generate genopts --function Base token:string debugBody debugPayload
+
 // Client is a client for resy.com
 type Client struct {
 	token    string

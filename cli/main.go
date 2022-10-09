@@ -2,22 +2,28 @@ package cli
 
 import (
 	"context"
-	"flag"
 
+	"github.com/spudtrooper/goutil/flags"
 	"github.com/spudtrooper/minimalcli/handler"
 	"github.com/spudtrooper/resy/api"
 	"github.com/spudtrooper/resy/handlers"
 )
 
 var (
-	term      = flag.String("term", "", "search term")
-	debugBody = flag.Bool("debug_body", false, "debug body")
+	term         = flags.String("term", "search term")
+	debugBody    = flags.Bool("debug_body", "debug body")
+	debugPayload = flags.Bool("debug_payload", "debug payload")
+	urlSlug      = flags.String("url_slug", "url slug")
+	location     = flags.String("location", "location")
 )
 
 func Main(ctx context.Context) error {
 	adp := handler.NewCLIAdapter()
 	adp.BindStringFlag("term", term)
 	adp.BindBoolFlag("debug_body", debugBody)
+	adp.BindBoolFlag("debug_payload", debugPayload)
+	adp.BindStringFlag("url_slug", urlSlug)
+	adp.BindStringFlag("location", location)
 
 	client, err := api.NewClientFromFlags()
 	if err != nil {

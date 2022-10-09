@@ -27,7 +27,6 @@ func ListenAndServe(ctx context.Context, client *api.Client, port int, host stri
 		handler.CreateHandlerSourceLinks(true),
 		handler.CreateHandlerHandlersFiles([]string{"handlers/handlers.go"}),
 		handler.CreateHandlerSourceLinkURIRoot("https://github.com/spudtrooper/resy/blob/main"),
-		handler.CreateHandlerFormatHTML(true),
 	)
 	if err != nil {
 		return err

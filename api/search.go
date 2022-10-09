@@ -595,15 +595,24 @@ type searchInfoPayload struct {
 }
 
 type SearchInfoHit struct {
-	ID            int
-	Cuisines      []string
-	Neighborhood  string
-	Name          string
-	Country       string
-	Region        string
-	RatingAverage float64
-	RatingCount   int
-	Keywords      []string
+	ID             int
+	Cuisines       []string
+	Neighborhood   string
+	Name           string
+	Country        string
+	Region         string
+	RatingAverage  float64
+	RatingCount    int
+	Keywords       []string
+	CurrencySymbol string
+	URLSlug        string
+	Location       SearchInfoHitLocation
+}
+
+type SearchInfoHitLocation struct {
+	Code string
+	ID   int
+	Name string
 }
 
 type SearchInfo struct {
@@ -614,15 +623,22 @@ func convertSearchInfoPayload(p searchInfoPayload) *SearchInfo {
 	var hits []SearchInfoHit
 	for _, h := range p.Search.Hits {
 		hits = append(hits, SearchInfoHit{
-			ID:            h.ID.Resy,
-			Cuisines:      h.Cuisine,
-			Neighborhood:  h.Neighborhood,
-			Name:          h.Name,
-			Country:       h.Country,
-			Region:        h.Region,
-			RatingAverage: h.Rating.Average,
-			RatingCount:   h.Rating.Count,
-			Keywords:      h.Keywords,
+			ID:             h.ID.Resy,
+			Cuisines:       h.Cuisine,
+			Neighborhood:   h.Neighborhood,
+			Name:           h.Name,
+			Country:        h.Country,
+			Region:         h.Region,
+			RatingAverage:  h.Rating.Average,
+			RatingCount:    h.Rating.Count,
+			Keywords:       h.Keywords,
+			CurrencySymbol: h.CurrencySymbol,
+			URLSlug:        h.URLSlug,
+			Location: SearchInfoHitLocation{
+				Code: h.Location.Code,
+				ID:   h.Location.ID,
+				Name: h.Location.Name,
+			},
 		})
 	}
 	return &SearchInfo{
@@ -630,37 +646,45 @@ func convertSearchInfoPayload(p searchInfoPayload) *SearchInfo {
 	}
 }
 
-//go:generate genopts --function Search --params --required "term string" token:string partySize:int:2 page:int:1 perPage:int:20 latitude:float64:40.712941 longitude:float64:-74.006393 radius:int:35420 day:time.Time debugBody
+func (c *Client) makeHeaders(auth bool, optss ...BaseOption) map[string]string {
+	opts := MakeBaseOptions(optss...)
+	headers := map[string]string{
+		"authority":          `api.resy.com`,
+		"accept":             `application/json, text/plain, */*`,
+		"accept-language":    `en-US,en;q=0.9`,
+		"authorization":      `ResyAPI api_key="VbWk7s3L4KiK5fzlO7JD3Q5EYolJI7n5"`,
+		"cache-control":      `no-cache`,
+		"content-type":       `application/json`,
+		"dnt":                `1`,
+		"origin":             `https://resy.com`,
+		"pragma":             `no-cache`,
+		"referer":            `https://resy.com/`,
+		"sec-ch-ua":          `"Google Chrome";v="105", "Not)A;Brand";v="8", "Chromium";v="105"`,
+		"sec-ch-ua-mobile":   `?0`,
+		"sec-ch-ua-platform": `"macOS"`,
+		"sec-fetch-dest":     `empty`,
+		"sec-fetch-mode":     `cors`,
+		"sec-fetch-site":     `same-site`,
+		"user-agent":         `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36`,
+		"x-origin":           `https://resy.com`,
+	}
+	if auth {
+		token := or.String(opts.Token(), c.token)
+		headers["x-resy-auth-token"] = token
+		headers["x-resy-universal-auth"] = token
+	}
+	return headers
+}
+
+//go:generate genopts --function Search --params --required "term string" --extends Base partySize:int:2 page:int:1 perPage:int:20 latitude:float64:40.712941 longitude:float64:-74.006393 radius:int:35420 day:time.Time
 func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error) {
 	opts := MakeSearchOptions(optss...)
 
-	token := or.String(opts.Token(), c.token)
 	d := or.Time(opts.Day(), time.Now())
 	day := d.Format("2006-01-02")
 
 	uri := request.MakeURL("https://api.resy.com/3/venuesearch/search")
-	headers := map[string]string{
-		"authority":             `api.resy.com`,
-		"accept":                `application/json, text/plain, */*`,
-		"accept-language":       `en-US,en;q=0.9`,
-		"authorization":         `ResyAPI api_key="VbWk7s3L4KiK5fzlO7JD3Q5EYolJI7n5"`,
-		"cache-control":         `no-cache`,
-		"content-type":          `application/json`,
-		"dnt":                   `1`,
-		"origin":                `https://resy.com`,
-		"pragma":                `no-cache`,
-		"referer":               `https://resy.com/`,
-		"sec-ch-ua":             `"Google Chrome";v="105", "Not)A;Brand";v="8", "Chromium";v="105"`,
-		"sec-ch-ua-mobile":      `?0`,
-		"sec-ch-ua-platform":    `"macOS"`,
-		"sec-fetch-dest":        `empty`,
-		"sec-fetch-mode":        `cors`,
-		"sec-fetch-site":        `same-site`,
-		"user-agent":            `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36`,
-		"x-origin":              `https://resy.com`,
-		"x-resy-auth-token":     token,
-		"x-resy-universal-auth": token,
-	}
+	headers := c.makeHeaders(false, opts.ToBaseOptions()...)
 
 	type Geo struct {
 		Latitude  float64 `json:"latitude"`
@@ -706,6 +730,10 @@ func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error)
 	var payload searchInfoPayload
 	if _, err := request.Post(uri, &payload, strings.NewReader(body), request.RequestExtraHeaders(headers)); err != nil {
 		return nil, err
+	}
+
+	if opts.DebugPayload() {
+		log.Printf("payload: %s", payload)
 	}
 
 	return convertSearchInfoPayload(payload), nil

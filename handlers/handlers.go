@@ -19,5 +19,13 @@ func CreateHandlers(client *api.Client) []handler.Handler {
 		api.SearchParams{},
 	)
 
+	b.NewHandler("Venue",
+		func(ctx context.Context, ip any) (any, error) {
+			p := ip.(api.VenueParams)
+			return client.Venue(p.UrlSlug, p.Location, p.Options()...)
+		},
+		api.VenueParams{},
+	)
+
 	return b.Build()
 }
