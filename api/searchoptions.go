@@ -26,6 +26,8 @@ type SearchOptions interface {
 	HasRadius() bool
 	Day() time.Time
 	HasDay() bool
+	DebugBody() bool
+	HasDebugBody() bool
 }
 
 func SearchToken(token string) SearchOption {
@@ -156,6 +158,22 @@ func SearchDayFlag(day *time.Time) SearchOption {
 	}
 }
 
+func SearchDebugBody(debugBody bool) SearchOption {
+	return func(opts *searchOptionImpl) {
+		opts.has_debugBody = true
+		opts.debugBody = debugBody
+	}
+}
+func SearchDebugBodyFlag(debugBody *bool) SearchOption {
+	return func(opts *searchOptionImpl) {
+		if debugBody == nil {
+			return
+		}
+		opts.has_debugBody = true
+		opts.debugBody = *debugBody
+	}
+}
+
 type searchOptionImpl struct {
 	token         string
 	has_token     bool
@@ -173,6 +191,8 @@ type searchOptionImpl struct {
 	has_radius    bool
 	day           time.Time
 	has_day       bool
+	debugBody     bool
+	has_debugBody bool
 }
 
 func (s *searchOptionImpl) Token() string      { return s.token }
@@ -183,14 +203,16 @@ func (s *searchOptionImpl) Page() int          { return or.Int(s.page, 1) }
 func (s *searchOptionImpl) HasPage() bool      { return s.has_page }
 func (s *searchOptionImpl) PerPage() int       { return or.Int(s.perPage, 20) }
 func (s *searchOptionImpl) HasPerPage() bool   { return s.has_perPage }
-func (s *searchOptionImpl) Latitude() float64  { return or.Float64(s.latitude, 40.725562967812365) }
+func (s *searchOptionImpl) Latitude() float64  { return or.Float64(s.latitude, 40.712941) }
 func (s *searchOptionImpl) HasLatitude() bool  { return s.has_latitude }
-func (s *searchOptionImpl) Longitude() float64 { return or.Float64(s.longitude, -73.99434669171899) }
+func (s *searchOptionImpl) Longitude() float64 { return or.Float64(s.longitude, -74.006393) }
 func (s *searchOptionImpl) HasLongitude() bool { return s.has_longitude }
 func (s *searchOptionImpl) Radius() int        { return or.Int(s.radius, 35420) }
 func (s *searchOptionImpl) HasRadius() bool    { return s.has_radius }
 func (s *searchOptionImpl) Day() time.Time     { return s.day }
 func (s *searchOptionImpl) HasDay() bool       { return s.has_day }
+func (s *searchOptionImpl) DebugBody() bool    { return s.debugBody }
+func (s *searchOptionImpl) HasDebugBody() bool { return s.has_debugBody }
 
 type SearchParams struct {
 	Term      string    `json:"term" required:"true"`
@@ -198,10 +220,11 @@ type SearchParams struct {
 	PartySize int       `json:"party_size" default:"2"`
 	Page      int       `json:"page" default:"1"`
 	PerPage   int       `json:"per_page" default:"20"`
-	Latitude  float64   `json:"latitude" default:"40.725562967812365"`
-	Longitude float64   `json:"longitude" default:"-73.99434669171899"`
+	Latitude  float64   `json:"latitude" default:"40.712941"`
+	Longitude float64   `json:"longitude" default:"-74.006393"`
 	Radius    int       `json:"radius" default:"35420"`
 	Day       time.Time `json:"day"`
+	DebugBody bool      `json:"debug_body"`
 }
 
 func (o SearchParams) Options() []SearchOption {
@@ -214,6 +237,7 @@ func (o SearchParams) Options() []SearchOption {
 		SearchLongitude(o.Longitude),
 		SearchRadius(o.Radius),
 		SearchDay(o.Day),
+		SearchDebugBody(o.DebugBody),
 	}
 }
 

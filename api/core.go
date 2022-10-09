@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log"
 	"strings"
 	"time"
 
@@ -48,7 +49,7 @@ type searchInfoPayload struct {
 			// 		} `json:"name"`
 			// 	} `json:"location"`
 			// } `json:"_highlightResult,omitempty"`
-			// Keywords        []string `json:"keywords"`
+			Keywords []string `json:"keywords"`
 			// IsGns           int      `json:"is_gns"`
 			Cuisine      []string `json:"cuisine"`
 			Neighborhood string   `json:"neighborhood"`
@@ -602,6 +603,7 @@ type SearchInfoHit struct {
 	Region        string
 	RatingAverage float64
 	RatingCount   int
+	Keywords      []string
 }
 
 type SearchInfo struct {
@@ -620,6 +622,7 @@ func convertSearchInfoPayload(p searchInfoPayload) *SearchInfo {
 			Region:        h.Region,
 			RatingAverage: h.Rating.Average,
 			RatingCount:   h.Rating.Count,
+			Keywords:      h.Keywords,
 		})
 	}
 	return &SearchInfo{
@@ -627,7 +630,7 @@ func convertSearchInfoPayload(p searchInfoPayload) *SearchInfo {
 	}
 }
 
-//go:generate genopts --function Search --params --required "term string" token:string partySize:int:2 page:int:1 perPage:int:20 latitude:float64:40.725562967812365 longitude:float64:-73.99434669171899 radius:int:35420 day:time.Time
+//go:generate genopts --function Search --params --required "term string" token:string partySize:int:2 page:int:1 perPage:int:20 latitude:float64:40.712941 longitude:float64:-74.006393 radius:int:35420 day:time.Time debugBody
 func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error) {
 	opts := MakeSearchOptions(optss...)
 
@@ -659,9 +662,6 @@ func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error)
 		"x-resy-universal-auth": token,
 	}
 
-	type VenueFilter struct {
-		Cuisine string `json:"cuisine"`
-	}
 	type Geo struct {
 		Latitude  float64 `json:"latitude"`
 		Longitude float64 `json:"longitude"`
@@ -672,13 +672,13 @@ func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error)
 		PartySize int    `json:"party_size"`
 	}
 	type Body struct {
-		Availability bool        `json:"availability"`
-		Page         int         `json:"page"`
-		PerPage      int         `json:"per_page"`
-		SlotFilter   SlotFilter  `json:"slot_filter"`
-		Types        []string    `json:"types"`
-		Geo          Geo         `json:"geo"`
-		VenueFilter  VenueFilter `json:"venue_filter"`
+		Availability bool       `json:"availability"`
+		Page         int        `json:"page"`
+		PerPage      int        `json:"per_page"`
+		SlotFilter   SlotFilter `json:"slot_filter"`
+		Types        []string   `json:"types"`
+		Geo          Geo        `json:"geo"`
+		Query        string     `json:"query"`
 	}
 
 	bodyObject := Body{
@@ -692,14 +692,16 @@ func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error)
 		Types: []string{"venue"},
 		Geo: Geo{
 			Latitude:  opts.Latitude(),
-			Longitude: opts.Latitude(),
+			Longitude: opts.Longitude(),
 			Radius:    opts.Radius(),
 		},
-		VenueFilter: VenueFilter{
-			Cuisine: term,
-		},
+		Query: term,
 	}
 	body := string(request.MustJSONMarshal(bodyObject))
+
+	if opts.DebugBody() {
+		log.Printf("body: %s", body)
+	}
 
 	var payload searchInfoPayload
 	if _, err := request.Post(uri, &payload, strings.NewReader(body), request.RequestExtraHeaders(headers)); err != nil {
