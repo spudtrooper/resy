@@ -1,7 +1,11 @@
 // DO NOT EDIT MANUALLY: Generated from https://github.com/spudtrooper/genopts
 package api
 
-import "time"
+import (
+	"time"
+
+	"github.com/spudtrooper/goutil/or"
+)
 
 type SearchOption func(*searchOptionImpl)
 
@@ -173,17 +177,17 @@ type searchOptionImpl struct {
 
 func (s *searchOptionImpl) Token() string      { return s.token }
 func (s *searchOptionImpl) HasToken() bool     { return s.has_token }
-func (s *searchOptionImpl) PartySize() int     { return s.partySize }
+func (s *searchOptionImpl) PartySize() int     { return or.Int(s.partySize, 2) }
 func (s *searchOptionImpl) HasPartySize() bool { return s.has_partySize }
-func (s *searchOptionImpl) Page() int          { return s.page }
+func (s *searchOptionImpl) Page() int          { return or.Int(s.page, 1) }
 func (s *searchOptionImpl) HasPage() bool      { return s.has_page }
-func (s *searchOptionImpl) PerPage() int       { return s.perPage }
+func (s *searchOptionImpl) PerPage() int       { return or.Int(s.perPage, 20) }
 func (s *searchOptionImpl) HasPerPage() bool   { return s.has_perPage }
-func (s *searchOptionImpl) Latitude() float64  { return s.latitude }
+func (s *searchOptionImpl) Latitude() float64  { return or.Float64(s.latitude, 40.725562967812365) }
 func (s *searchOptionImpl) HasLatitude() bool  { return s.has_latitude }
-func (s *searchOptionImpl) Longitude() float64 { return s.longitude }
+func (s *searchOptionImpl) Longitude() float64 { return or.Float64(s.longitude, -73.99434669171899) }
 func (s *searchOptionImpl) HasLongitude() bool { return s.has_longitude }
-func (s *searchOptionImpl) Radius() int        { return s.radius }
+func (s *searchOptionImpl) Radius() int        { return or.Int(s.radius, 35420) }
 func (s *searchOptionImpl) HasRadius() bool    { return s.has_radius }
 func (s *searchOptionImpl) Day() time.Time     { return s.day }
 func (s *searchOptionImpl) HasDay() bool       { return s.has_day }
@@ -191,12 +195,12 @@ func (s *searchOptionImpl) HasDay() bool       { return s.has_day }
 type SearchParams struct {
 	Term      string    `json:"term" required:"true"`
 	Token     string    `json:"token"`
-	PartySize int       `json:"party_size"`
-	Page      int       `json:"page"`
-	PerPage   int       `json:"per_page"`
-	Latitude  float64   `json:"latitude"`
-	Longitude float64   `json:"longitude"`
-	Radius    int       `json:"radius"`
+	PartySize int       `json:"party_size" default:"2"`
+	Page      int       `json:"page" default:"1"`
+	PerPage   int       `json:"per_page" default:"20"`
+	Latitude  float64   `json:"latitude" default:"40.725562967812365"`
+	Longitude float64   `json:"longitude" default:"-73.99434669171899"`
+	Radius    int       `json:"radius" default:"35420"`
 	Day       time.Time `json:"day"`
 }
 

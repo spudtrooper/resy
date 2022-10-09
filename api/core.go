@@ -623,7 +623,7 @@ func convertSearchInfoPayload(p searchInfoPayload) *SearchInfo {
 	}
 }
 
-//go:generate genopts --function Search --params --required "term string" token:string partySize:int page:int perPage:int latitude:float64 longitude:float64 radius:int day:time.Time
+//go:generate genopts --function Search --params --required "term string" token:string partySize:int:2 page:int:1 perPage:int:20 latitude:float64:40.725562967812365 longitude:float64:-73.99434669171899 radius:int:35420 day:time.Time
 func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error) {
 	opts := MakeSearchOptions(optss...)
 
