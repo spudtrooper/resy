@@ -24,10 +24,10 @@ func ListenAndServe(ctx context.Context, client *api.Client, port int, host stri
 	if err := handler.AddHandlers(ctx, mux, handlers,
 		handler.AddHandlersPrefix("api"),
 		handler.AddHandlersIndexTitle("unofficial resy API"),
-		handler.AddHandlersFooterHTML(`Details: <a target="_" href="https://github.com/spudtrooper/resy">github.com/spudtrooper/resy</a>`),
+		handler.AddHandlersFooterHTML(`Details: <a target="_" href="//github.com/spudtrooper/resy">github.com/spudtrooper/resy</a>`),
 		handler.AddHandlersSourceLinks(true),
 		handler.AddHandlersHandlersFiles([]string{"handlers/handlers.go"}),
-		handler.AddHandlersSourceLinkURIRoot("https://github.com/spudtrooper/resy/blob/main"),
+		handler.AddHandlersSourceLinkURIRoot("//github.com/spudtrooper/resy/blob/main"),
 	); err != nil {
 		return err
 	}

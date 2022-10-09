@@ -15,9 +15,9 @@ import (
 )
 
 var (
-	token       = flags.String("token", "auth token")
-	userCreds   = flag.String("user_creds", ".user_creds.json", "file with user credentials")
-	noUserCreds = flag.Bool("no_user_creds", false, "Don't use user creds event if it exists")
+	token       = flags.String("resy_token", "auth token")
+	userCreds   = flag.String("resy_user_creds", ".user_creds.json", "file with user credentials")
+	noUserCreds = flag.Bool("resy_no_user_creds", false, "Don't use user creds event if it exists")
 )
 
 // TODO: need to make genopts regex more flexible, need to have "--function Base" exactly here, which isn't great
