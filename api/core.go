@@ -594,12 +594,14 @@ type searchInfoPayload struct {
 }
 
 type SearchInfoHit struct {
-	ID           int
-	Cuisines     []string
-	Neighborhood string
-	Name         string
-	Country      string
-	Region       string
+	ID            int
+	Cuisines      []string
+	Neighborhood  string
+	Name          string
+	Country       string
+	Region        string
+	RatingAverage float64
+	RatingCount   int
 }
 
 type SearchInfo struct {
@@ -610,12 +612,14 @@ func convertSearchInfoPayload(p searchInfoPayload) *SearchInfo {
 	var hits []SearchInfoHit
 	for _, h := range p.Search.Hits {
 		hits = append(hits, SearchInfoHit{
-			ID:           h.ID.Resy,
-			Cuisines:     h.Cuisine,
-			Neighborhood: h.Neighborhood,
-			Name:         h.Name,
-			Country:      h.Country,
-			Region:       h.Region,
+			ID:            h.ID.Resy,
+			Cuisines:      h.Cuisine,
+			Neighborhood:  h.Neighborhood,
+			Name:          h.Name,
+			Country:       h.Country,
+			Region:        h.Region,
+			RatingAverage: h.Rating.Average,
+			RatingCount:   h.Rating.Count,
 		})
 	}
 	return &SearchInfo{
@@ -628,13 +632,6 @@ func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error)
 	opts := MakeSearchOptions(optss...)
 
 	token := or.String(opts.Token(), c.token)
-	partySize := or.Int(opts.PartySize(), 2)
-	page := or.Int(opts.Page(), 1)
-	perPage := or.Int(opts.PerPage(), 20)
-	latitude := or.Float64(opts.Latitude(), 40.725562967812365)
-	longitude := or.Float64(opts.Longitude(), -73.99434669171899)
-	radius := or.Int(opts.Radius(), 35420)
-
 	d := or.Time(opts.Day(), time.Now())
 	day := d.Format("2006-01-02")
 
@@ -686,17 +683,17 @@ func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error)
 
 	bodyObject := Body{
 		Availability: true,
-		Page:         page,
-		PerPage:      perPage,
+		Page:         opts.Page(),
+		PerPage:      opts.PerPage(),
 		SlotFilter: SlotFilter{
 			Day:       day,
-			PartySize: partySize,
+			PartySize: opts.PartySize(),
 		},
 		Types: []string{"venue"},
 		Geo: Geo{
-			Latitude:  latitude,
-			Longitude: longitude,
-			Radius:    radius,
+			Latitude:  opts.Latitude(),
+			Longitude: opts.Latitude(),
+			Radius:    opts.Radius(),
 		},
 		VenueFilter: VenueFilter{
 			Cuisine: term,
