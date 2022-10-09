@@ -452,7 +452,7 @@ type VenueInfoID struct {
 }
 
 type VenueInfoContent struct {
-	Body           string `json:"body"`
+	Body           string
 	DisplayType    string
 	IconURL        string
 	LocaleLanguage string
@@ -496,6 +496,8 @@ type VenueInfo struct {
 	CurrencySymbol string
 	Location       VenueLocation
 	Raters         []VenueRater
+	MinPartySize   int
+	MaxPartySize   int
 }
 
 func convertvenueInfoPayload(p venueInfoPayload) *VenueInfo {
@@ -553,7 +555,9 @@ func convertvenueInfoPayload(p venueInfoPayload) *VenueInfo {
 			PostalCode:     p.Location.PostalCode,
 			Region:         p.Location.Region,
 		},
-		Raters: raters,
+		Raters:       raters,
+		MinPartySize: p.MinPartySize,
+		MaxPartySize: p.MaxPartySize,
 	}
 }
 

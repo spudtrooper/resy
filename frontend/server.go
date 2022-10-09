@@ -20,15 +20,15 @@ func ListenAndServe(ctx context.Context, client *api.Client, port int, host stri
 	}
 
 	handlers := handlers.CreateHandlers(client)
-	mux, err := handler.CreateHandler(ctx, handlers,
-		handler.CreateHandlerPrefix("api"),
-		handler.CreateHandlerIndexTitle("unofficial resy API"),
-		handler.CreateHandlerFooterHTML(`Details: <a target="_" href="https://github.com/spudtrooper/resy">github.com/spudtrooper/resy</a>`),
-		handler.CreateHandlerSourceLinks(true),
-		handler.CreateHandlerHandlersFiles([]string{"handlers/handlers.go"}),
-		handler.CreateHandlerSourceLinkURIRoot("https://github.com/spudtrooper/resy/blob/main"),
-	)
-	if err != nil {
+	mux := http.NewServeMux()
+	if err := handler.AddHandlers(ctx, mux, handlers,
+		handler.AddHandlersPrefix("api"),
+		handler.AddHandlersIndexTitle("unofficial resy API"),
+		handler.AddHandlersFooterHTML(`Details: <a target="_" href="https://github.com/spudtrooper/resy">github.com/spudtrooper/resy</a>`),
+		handler.AddHandlersSourceLinks(true),
+		handler.AddHandlersHandlersFiles([]string{"handlers/handlers.go"}),
+		handler.AddHandlersSourceLinkURIRoot("https://github.com/spudtrooper/resy/blob/main"),
+	); err != nil {
 		return err
 	}
 	mux.Handle("/", http.RedirectHandler("/api", http.StatusSeeOther))
