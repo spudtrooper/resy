@@ -3,10 +3,15 @@ package handlers
 
 import (
 	"context"
+	_ "embed"
 
 	"github.com/spudtrooper/minimalcli/handler"
 	"github.com/spudtrooper/resy/api"
 )
+
+//go:generate minimalcli gsl --input handlers.go --uri_root "github.com/spudtrooper/resy/blob/main/handlers" --output handlers.go.json
+//go:embed handlers.go.json
+var SourceLocations []byte
 
 func CreateHandlers(client *api.Client) []handler.Handler {
 	b := handler.NewHandlerBuilder()
