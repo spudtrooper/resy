@@ -16,20 +16,10 @@ func Main(ctx context.Context) error {
 	flag.String("url_slug", "", "url slug")
 	flag.String("location", "", "location")
 
-	adp := handler.NewCLIAdapter()
-	adp.BindToGlobalFlags()
-
 	client, err := api.NewClientFromFlags()
 	if err != nil {
 		return err
 	}
 
-	handlers := handlers.CreateHandlers(client)
-	app := handler.CreateCLI(adp, handlers...)
-
-	if err := app.Run(ctx); err != nil {
-		return err
-	}
-
-	return nil
+	return handler.RunCLI(ctx, handlers.CreateHandlers(client)...)
 }
