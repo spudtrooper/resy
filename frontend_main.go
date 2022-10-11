@@ -35,8 +35,8 @@ func main() {
 	if *host == "" {
 		log.Fatalf("host is required")
 	}
-	ctx := context.Background()
 
+	ctx := context.Background()
 	client := api.NewClient("")
 	check.Err(frontend.ListenAndServe(ctx, client, port, *host))
 }
