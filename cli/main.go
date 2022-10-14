@@ -15,6 +15,7 @@ func Main(ctx context.Context) error {
 	flag.Bool("debug_payload", false, "debug payload")
 	flag.String("url_slug", "", "url slug")
 	flag.String("location", "", "location")
+	flag.Int("venue_id", 0, "venue ID")
 
 	client, err := api.NewClientFromFlags()
 	if err != nil {

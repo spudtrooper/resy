@@ -500,7 +500,7 @@ type VenueInfo struct {
 	MaxPartySize   int
 }
 
-func convertvenueInfoPayload(p venueInfoPayload) *VenueInfo {
+func convertVenueInfoPayload(p venueInfoPayload) *VenueInfo {
 	var content []VenueInfoContent
 	for _, c := range p.Content {
 		content = append(content, VenueInfoContent{
@@ -580,7 +580,7 @@ func (c *Client) Venue(urlSlug string, location string, optss ...VenueOption) (*
 		log.Printf("payload: %s", payload)
 	}
 
-	res := convertvenueInfoPayload(payload)
+	res := convertVenueInfoPayload(payload)
 
 	return res, nil
 }

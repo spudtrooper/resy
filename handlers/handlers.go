@@ -32,5 +32,13 @@ func CreateHandlers(client *api.Client) []handler.Handler {
 		api.VenueParams{},
 	)
 
+	b.NewHandler("Config",
+		func(ctx context.Context, ip any) (any, error) {
+			p := ip.(api.ConfigParams)
+			return client.Config(p.VenueID, p.Options()...)
+		},
+		api.ConfigParams{},
+	)
+
 	return b.Build()
 }
