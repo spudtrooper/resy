@@ -40,5 +40,13 @@ func CreateHandlers(client *api.Client) []handler.Handler {
 		api.ConfigParams{},
 	)
 
+	b.NewHandler("Calendar",
+		func(ctx context.Context, ip any) (any, error) {
+			p := ip.(api.CalendarParams)
+			return client.Calendar(p.VenueID, p.Options()...)
+		},
+		api.CalendarParams{},
+	)
+
 	return b.Build()
 }

@@ -1980,8 +1980,5 @@ func (c *Client) Config(venueID int, optss ...ConfigOption) (*ConfigInfo, error)
 		log.Printf("payload: %s", payload)
 	}
 
-	res := convertConfigInfoPayload(payload)
-
-	return res, nil
-	return nil, nil
+	return convertConfigInfoPayload(payload), nil
 }

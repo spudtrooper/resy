@@ -1,4 +1,4 @@
-curl 'https://api.resy.com/2/config?venue_id=1330' \
+curl 'https://api.resy.com/4/venue/calendar?venue_id=1330&num_seats=2&start_date=2022-10-14&end_date=2023-10-14' \
   -H 'authority: api.resy.com' \
   -H 'accept: application/json, text/plain, */*' \
   -H 'accept-language: en-US,en;q=0.9' \
