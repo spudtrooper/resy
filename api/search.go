@@ -702,9 +702,5 @@ func (c *Client) Search(term string, optss ...SearchOption) (*SearchInfo, error)
 		return nil, err
 	}
 
-	if opts.DebugPayload() {
-		log.Printf("payload: %s", payload)
-	}
-
 	return convertSearchInfoPayload(payload), nil
 }

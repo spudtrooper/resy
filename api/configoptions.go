@@ -8,8 +8,6 @@ type ConfigOptions interface {
 	HasToken() bool
 	DebugBody() bool
 	HasDebugBody() bool
-	DebugPayload() bool
-	HasDebugPayload() bool
 	ToBaseOptions() []BaseOption
 }
 
@@ -45,50 +43,28 @@ func ConfigDebugBodyFlag(debugBody *bool) ConfigOption {
 	}
 }
 
-func ConfigDebugPayload(debugPayload bool) ConfigOption {
-	return func(opts *configOptionImpl) {
-		opts.has_debugPayload = true
-		opts.debugPayload = debugPayload
-	}
-}
-func ConfigDebugPayloadFlag(debugPayload *bool) ConfigOption {
-	return func(opts *configOptionImpl) {
-		if debugPayload == nil {
-			return
-		}
-		opts.has_debugPayload = true
-		opts.debugPayload = *debugPayload
-	}
-}
-
 type configOptionImpl struct {
-	token            string
-	has_token        bool
-	debugBody        bool
-	has_debugBody    bool
-	debugPayload     bool
-	has_debugPayload bool
+	token         string
+	has_token     bool
+	debugBody     bool
+	has_debugBody bool
 }
 
-func (c *configOptionImpl) Token() string         { return c.token }
-func (c *configOptionImpl) HasToken() bool        { return c.has_token }
-func (c *configOptionImpl) DebugBody() bool       { return c.debugBody }
-func (c *configOptionImpl) HasDebugBody() bool    { return c.has_debugBody }
-func (c *configOptionImpl) DebugPayload() bool    { return c.debugPayload }
-func (c *configOptionImpl) HasDebugPayload() bool { return c.has_debugPayload }
+func (c *configOptionImpl) Token() string      { return c.token }
+func (c *configOptionImpl) HasToken() bool     { return c.has_token }
+func (c *configOptionImpl) DebugBody() bool    { return c.debugBody }
+func (c *configOptionImpl) HasDebugBody() bool { return c.has_debugBody }
 
 type ConfigParams struct {
-	VenueID      int    `json:"venue_id" required:"true"`
-	Token        string `json:"token"`
-	DebugBody    bool   `json:"debug_body"`
-	DebugPayload bool   `json:"debug_payload"`
+	VenueID   int    `json:"venue_id" required:"true"`
+	Token     string `json:"token"`
+	DebugBody bool   `json:"debug_body"`
 }
 
 func (o ConfigParams) Options() []ConfigOption {
 	return []ConfigOption{
 		ConfigToken(o.Token),
 		ConfigDebugBody(o.DebugBody),
-		ConfigDebugPayload(o.DebugPayload),
 	}
 }
 
@@ -97,7 +73,6 @@ func (o *configOptionImpl) ToBaseOptions() []BaseOption {
 	return []BaseOption{
 		BaseToken(o.Token()),
 		BaseDebugBody(o.DebugBody()),
-		BaseDebugPayload(o.DebugPayload()),
 	}
 }
 

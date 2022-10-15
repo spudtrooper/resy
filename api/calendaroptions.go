@@ -20,8 +20,6 @@ type CalendarOptions interface {
 	HasToken() bool
 	DebugBody() bool
 	HasDebugBody() bool
-	DebugPayload() bool
-	HasDebugPayload() bool
 	ToBaseOptions() []BaseOption
 }
 
@@ -105,58 +103,37 @@ func CalendarDebugBodyFlag(debugBody *bool) CalendarOption {
 	}
 }
 
-func CalendarDebugPayload(debugPayload bool) CalendarOption {
-	return func(opts *calendarOptionImpl) {
-		opts.has_debugPayload = true
-		opts.debugPayload = debugPayload
-	}
-}
-func CalendarDebugPayloadFlag(debugPayload *bool) CalendarOption {
-	return func(opts *calendarOptionImpl) {
-		if debugPayload == nil {
-			return
-		}
-		opts.has_debugPayload = true
-		opts.debugPayload = *debugPayload
-	}
-}
-
 type calendarOptionImpl struct {
-	startDate        time.Time
-	has_startDate    bool
-	endDate          time.Time
-	has_endDate      bool
-	numSeats         int
-	has_numSeats     bool
-	token            string
-	has_token        bool
-	debugBody        bool
-	has_debugBody    bool
-	debugPayload     bool
-	has_debugPayload bool
+	startDate     time.Time
+	has_startDate bool
+	endDate       time.Time
+	has_endDate   bool
+	numSeats      int
+	has_numSeats  bool
+	token         string
+	has_token     bool
+	debugBody     bool
+	has_debugBody bool
 }
 
-func (c *calendarOptionImpl) StartDate() time.Time  { return c.startDate }
-func (c *calendarOptionImpl) HasStartDate() bool    { return c.has_startDate }
-func (c *calendarOptionImpl) EndDate() time.Time    { return c.endDate }
-func (c *calendarOptionImpl) HasEndDate() bool      { return c.has_endDate }
-func (c *calendarOptionImpl) NumSeats() int         { return or.Int(c.numSeats, 2) }
-func (c *calendarOptionImpl) HasNumSeats() bool     { return c.has_numSeats }
-func (c *calendarOptionImpl) Token() string         { return c.token }
-func (c *calendarOptionImpl) HasToken() bool        { return c.has_token }
-func (c *calendarOptionImpl) DebugBody() bool       { return c.debugBody }
-func (c *calendarOptionImpl) HasDebugBody() bool    { return c.has_debugBody }
-func (c *calendarOptionImpl) DebugPayload() bool    { return c.debugPayload }
-func (c *calendarOptionImpl) HasDebugPayload() bool { return c.has_debugPayload }
+func (c *calendarOptionImpl) StartDate() time.Time { return c.startDate }
+func (c *calendarOptionImpl) HasStartDate() bool   { return c.has_startDate }
+func (c *calendarOptionImpl) EndDate() time.Time   { return c.endDate }
+func (c *calendarOptionImpl) HasEndDate() bool     { return c.has_endDate }
+func (c *calendarOptionImpl) NumSeats() int        { return or.Int(c.numSeats, 2) }
+func (c *calendarOptionImpl) HasNumSeats() bool    { return c.has_numSeats }
+func (c *calendarOptionImpl) Token() string        { return c.token }
+func (c *calendarOptionImpl) HasToken() bool       { return c.has_token }
+func (c *calendarOptionImpl) DebugBody() bool      { return c.debugBody }
+func (c *calendarOptionImpl) HasDebugBody() bool   { return c.has_debugBody }
 
 type CalendarParams struct {
-	VenueID      int       `json:"venue_id" required:"true"`
-	StartDate    time.Time `json:"start_date"`
-	EndDate      time.Time `json:"end_date"`
-	NumSeats     int       `json:"num_seats" default:"2"`
-	Token        string    `json:"token"`
-	DebugBody    bool      `json:"debug_body"`
-	DebugPayload bool      `json:"debug_payload"`
+	VenueID   int       `json:"venue_id" required:"true"`
+	StartDate time.Time `json:"start_date"`
+	EndDate   time.Time `json:"end_date"`
+	NumSeats  int       `json:"num_seats" default:"2"`
+	Token     string    `json:"token"`
+	DebugBody bool      `json:"debug_body"`
 }
 
 func (o CalendarParams) Options() []CalendarOption {
@@ -166,7 +143,6 @@ func (o CalendarParams) Options() []CalendarOption {
 		CalendarNumSeats(o.NumSeats),
 		CalendarToken(o.Token),
 		CalendarDebugBody(o.DebugBody),
-		CalendarDebugPayload(o.DebugPayload),
 	}
 }
 
@@ -175,7 +151,6 @@ func (o *calendarOptionImpl) ToBaseOptions() []BaseOption {
 	return []BaseOption{
 		BaseToken(o.Token()),
 		BaseDebugBody(o.DebugBody()),
-		BaseDebugPayload(o.DebugPayload()),
 	}
 }
 

@@ -1,8 +1,6 @@
 package api
 
 import (
-	"log"
-
 	"github.com/spudtrooper/goutil/request"
 )
 
@@ -574,10 +572,6 @@ func (c *Client) Venue(urlSlug string, location string, optss ...VenueOption) (*
 	var payload venueInfoPayload
 	if _, err := request.Get(uri, &payload, request.RequestExtraHeaders(headers)); err != nil {
 		return nil, err
-	}
-
-	if opts.DebugPayload() {
-		log.Printf("payload: %s", payload)
 	}
 
 	res := convertVenueInfoPayload(payload)

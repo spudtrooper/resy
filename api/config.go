@@ -1,7 +1,6 @@
 package api
 
 import (
-	"log"
 	"time"
 
 	"github.com/spudtrooper/goutil/request"
@@ -1974,10 +1973,6 @@ func (c *Client) Config(venueID int, optss ...ConfigOption) (*ConfigInfo, error)
 
 	if _, err := request.Get(uri, &payload, request.RequestExtraHeaders(headers)); err != nil {
 		return nil, err
-	}
-
-	if opts.DebugPayload() {
-		log.Printf("payload: %s", payload)
 	}
 
 	return convertConfigInfoPayload(payload), nil

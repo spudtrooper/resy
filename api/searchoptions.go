@@ -28,8 +28,6 @@ type SearchOptions interface {
 	HasToken() bool
 	DebugBody() bool
 	HasDebugBody() bool
-	DebugPayload() bool
-	HasDebugPayload() bool
 	ToBaseOptions() []BaseOption
 }
 
@@ -177,78 +175,57 @@ func SearchDebugBodyFlag(debugBody *bool) SearchOption {
 	}
 }
 
-func SearchDebugPayload(debugPayload bool) SearchOption {
-	return func(opts *searchOptionImpl) {
-		opts.has_debugPayload = true
-		opts.debugPayload = debugPayload
-	}
-}
-func SearchDebugPayloadFlag(debugPayload *bool) SearchOption {
-	return func(opts *searchOptionImpl) {
-		if debugPayload == nil {
-			return
-		}
-		opts.has_debugPayload = true
-		opts.debugPayload = *debugPayload
-	}
-}
-
 type searchOptionImpl struct {
-	partySize        int
-	has_partySize    bool
-	page             int
-	has_page         bool
-	perPage          int
-	has_perPage      bool
-	latitude         float64
-	has_latitude     bool
-	longitude        float64
-	has_longitude    bool
-	radius           int
-	has_radius       bool
-	day              time.Time
-	has_day          bool
-	token            string
-	has_token        bool
-	debugBody        bool
-	has_debugBody    bool
-	debugPayload     bool
-	has_debugPayload bool
+	partySize     int
+	has_partySize bool
+	page          int
+	has_page      bool
+	perPage       int
+	has_perPage   bool
+	latitude      float64
+	has_latitude  bool
+	longitude     float64
+	has_longitude bool
+	radius        int
+	has_radius    bool
+	day           time.Time
+	has_day       bool
+	token         string
+	has_token     bool
+	debugBody     bool
+	has_debugBody bool
 }
 
-func (s *searchOptionImpl) PartySize() int        { return or.Int(s.partySize, 2) }
-func (s *searchOptionImpl) HasPartySize() bool    { return s.has_partySize }
-func (s *searchOptionImpl) Page() int             { return or.Int(s.page, 1) }
-func (s *searchOptionImpl) HasPage() bool         { return s.has_page }
-func (s *searchOptionImpl) PerPage() int          { return or.Int(s.perPage, 20) }
-func (s *searchOptionImpl) HasPerPage() bool      { return s.has_perPage }
-func (s *searchOptionImpl) Latitude() float64     { return or.Float64(s.latitude, 40.712941) }
-func (s *searchOptionImpl) HasLatitude() bool     { return s.has_latitude }
-func (s *searchOptionImpl) Longitude() float64    { return or.Float64(s.longitude, -74.006393) }
-func (s *searchOptionImpl) HasLongitude() bool    { return s.has_longitude }
-func (s *searchOptionImpl) Radius() int           { return or.Int(s.radius, 35420) }
-func (s *searchOptionImpl) HasRadius() bool       { return s.has_radius }
-func (s *searchOptionImpl) Day() time.Time        { return s.day }
-func (s *searchOptionImpl) HasDay() bool          { return s.has_day }
-func (s *searchOptionImpl) Token() string         { return s.token }
-func (s *searchOptionImpl) HasToken() bool        { return s.has_token }
-func (s *searchOptionImpl) DebugBody() bool       { return s.debugBody }
-func (s *searchOptionImpl) HasDebugBody() bool    { return s.has_debugBody }
-func (s *searchOptionImpl) DebugPayload() bool    { return s.debugPayload }
-func (s *searchOptionImpl) HasDebugPayload() bool { return s.has_debugPayload }
+func (s *searchOptionImpl) PartySize() int     { return or.Int(s.partySize, 2) }
+func (s *searchOptionImpl) HasPartySize() bool { return s.has_partySize }
+func (s *searchOptionImpl) Page() int          { return or.Int(s.page, 1) }
+func (s *searchOptionImpl) HasPage() bool      { return s.has_page }
+func (s *searchOptionImpl) PerPage() int       { return or.Int(s.perPage, 20) }
+func (s *searchOptionImpl) HasPerPage() bool   { return s.has_perPage }
+func (s *searchOptionImpl) Latitude() float64  { return or.Float64(s.latitude, 40.712941) }
+func (s *searchOptionImpl) HasLatitude() bool  { return s.has_latitude }
+func (s *searchOptionImpl) Longitude() float64 { return or.Float64(s.longitude, -74.006393) }
+func (s *searchOptionImpl) HasLongitude() bool { return s.has_longitude }
+func (s *searchOptionImpl) Radius() int        { return or.Int(s.radius, 35420) }
+func (s *searchOptionImpl) HasRadius() bool    { return s.has_radius }
+func (s *searchOptionImpl) Day() time.Time     { return s.day }
+func (s *searchOptionImpl) HasDay() bool       { return s.has_day }
+func (s *searchOptionImpl) Token() string      { return s.token }
+func (s *searchOptionImpl) HasToken() bool     { return s.has_token }
+func (s *searchOptionImpl) DebugBody() bool    { return s.debugBody }
+func (s *searchOptionImpl) HasDebugBody() bool { return s.has_debugBody }
 
 type SearchParams struct {
-	Term         string    `json:"term" required:"true"`
-	PartySize    int       `json:"party_size" default:"2"`
-	Page         int       `json:"page" default:"1"`
-	PerPage      int       `json:"per_page" default:"20"`
-	Latitude     float64   `json:"latitude" default:"40.712941"`
-	Longitude    float64   `json:"longitude" default:"-74.006393"`
-	Radius       int       `json:"radius" default:"35420"`
-	Day          time.Time `json:"day"`
-	Token        string    `json:"token"`
-	DebugBody    bool      `json:"debug_body"`
-	DebugPayload bool      `json:"debug_payload"`
+	Term      string    `json:"term" required:"true"`
+	PartySize int       `json:"party_size" default:"2"`
+	Page      int       `json:"page" default:"1"`
+	PerPage   int       `json:"per_page" default:"20"`
+	Latitude  float64   `json:"latitude" default:"40.712941"`
+	Longitude float64   `json:"longitude" default:"-74.006393"`
+	Radius    int       `json:"radius" default:"35420"`
+	Day       time.Time `json:"day"`
+	Token     string    `json:"token"`
+	DebugBody bool      `json:"debug_body"`
 }
 
 func (o SearchParams) Options() []SearchOption {
@@ -262,7 +239,6 @@ func (o SearchParams) Options() []SearchOption {
 		SearchDay(o.Day),
 		SearchToken(o.Token),
 		SearchDebugBody(o.DebugBody),
-		SearchDebugPayload(o.DebugPayload),
 	}
 }
 
@@ -271,7 +247,6 @@ func (o *searchOptionImpl) ToBaseOptions() []BaseOption {
 	return []BaseOption{
 		BaseToken(o.Token()),
 		BaseDebugBody(o.DebugBody()),
-		BaseDebugPayload(o.DebugPayload()),
 	}
 }
 

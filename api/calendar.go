@@ -1,7 +1,6 @@
 package api
 
 import (
-	"log"
 	"time"
 
 	"github.com/spudtrooper/goutil/or"
@@ -75,10 +74,6 @@ func (c *Client) Calendar(venueID int, optss ...CalendarOption) (*CalendarInfo, 
 
 	if _, err := request.Get(uri, &payload, request.RequestExtraHeaders(headers)); err != nil {
 		return nil, err
-	}
-
-	if opts.DebugPayload() {
-		log.Printf("payload: %s", payload)
 	}
 
 	return convertCalendarInfoPayload(payload), nil
