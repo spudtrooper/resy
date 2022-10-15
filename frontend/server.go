@@ -22,8 +22,10 @@ func ListenAndServe(ctx context.Context, client *api.Client, port int, host stri
 	locs := handlers.SourceLocations
 	handlers := handlers.CreateHandlers(client)
 	mux := http.NewServeMux()
+	handler.Init(mux)
 	if err := handler.AddHandlers(ctx, mux, handlers,
 		handler.AddHandlersPrefix("api"),
+		handler.AddHandlersKey("resy"),
 		handler.AddHandlersIndexTitle("unofficial resy API"),
 		handler.AddHandlersFooterHTML(`Details: <a target="_" href="//github.com/spudtrooper/resy">github.com/spudtrooper/resy</a>`),
 		handler.AddHandlersSourceLinks(true),
