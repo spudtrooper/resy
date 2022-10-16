@@ -1,12 +1,5 @@
 [
   {
-    "Handler": "Search",
-    "Loc": {
-      "uri": "github.com/spudtrooper/resy/blob/main/handlers/handlers.go",
-      "line": 19
-    }
-  },
-  {
     "Handler": "Venue",
     "Loc": {
       "uri": "github.com/spudtrooper/resy/blob/main/handlers/handlers.go",
@@ -25,6 +18,13 @@
     "Loc": {
       "uri": "github.com/spudtrooper/resy/blob/main/handlers/handlers.go",
       "line": 43
+    }
+  },
+  {
+    "Handler": "Search",
+    "Loc": {
+      "uri": "github.com/spudtrooper/resy/blob/main/handlers/handlers.go",
+      "line": 19
     }
   }
 ]
