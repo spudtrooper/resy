@@ -2,12 +2,18 @@
 package api
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/spudtrooper/goutil/or"
 )
 
-type SearchOption func(*searchOptionImpl)
+type SearchOption struct {
+	f func(*searchOptionImpl)
+	s string
+}
+
+func (o SearchOption) String() string { return o.s }
 
 type SearchOptions interface {
 	PartySize() int
@@ -32,147 +38,147 @@ type SearchOptions interface {
 }
 
 func SearchPartySize(partySize int) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_partySize = true
 		opts.partySize = partySize
-	}
+	}, fmt.Sprintf("api.SearchPartySize(int %+v)}", partySize)}
 }
 func SearchPartySizeFlag(partySize *int) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if partySize == nil {
 			return
 		}
 		opts.has_partySize = true
 		opts.partySize = *partySize
-	}
+	}, fmt.Sprintf("api.SearchPartySize(int %+v)}", partySize)}
 }
 
 func SearchPage(page int) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_page = true
 		opts.page = page
-	}
+	}, fmt.Sprintf("api.SearchPage(int %+v)}", page)}
 }
 func SearchPageFlag(page *int) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if page == nil {
 			return
 		}
 		opts.has_page = true
 		opts.page = *page
-	}
+	}, fmt.Sprintf("api.SearchPage(int %+v)}", page)}
 }
 
 func SearchPerPage(perPage int) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_perPage = true
 		opts.perPage = perPage
-	}
+	}, fmt.Sprintf("api.SearchPerPage(int %+v)}", perPage)}
 }
 func SearchPerPageFlag(perPage *int) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if perPage == nil {
 			return
 		}
 		opts.has_perPage = true
 		opts.perPage = *perPage
-	}
+	}, fmt.Sprintf("api.SearchPerPage(int %+v)}", perPage)}
 }
 
 func SearchLatitude(latitude float64) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_latitude = true
 		opts.latitude = latitude
-	}
+	}, fmt.Sprintf("api.SearchLatitude(float64 %+v)}", latitude)}
 }
 func SearchLatitudeFlag(latitude *float64) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if latitude == nil {
 			return
 		}
 		opts.has_latitude = true
 		opts.latitude = *latitude
-	}
+	}, fmt.Sprintf("api.SearchLatitude(float64 %+v)}", latitude)}
 }
 
 func SearchLongitude(longitude float64) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_longitude = true
 		opts.longitude = longitude
-	}
+	}, fmt.Sprintf("api.SearchLongitude(float64 %+v)}", longitude)}
 }
 func SearchLongitudeFlag(longitude *float64) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if longitude == nil {
 			return
 		}
 		opts.has_longitude = true
 		opts.longitude = *longitude
-	}
+	}, fmt.Sprintf("api.SearchLongitude(float64 %+v)}", longitude)}
 }
 
 func SearchRadius(radius int) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_radius = true
 		opts.radius = radius
-	}
+	}, fmt.Sprintf("api.SearchRadius(int %+v)}", radius)}
 }
 func SearchRadiusFlag(radius *int) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if radius == nil {
 			return
 		}
 		opts.has_radius = true
 		opts.radius = *radius
-	}
+	}, fmt.Sprintf("api.SearchRadius(int %+v)}", radius)}
 }
 
 func SearchDay(day time.Time) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_day = true
 		opts.day = day
-	}
+	}, fmt.Sprintf("api.SearchDay(time.Time %+v)}", day)}
 }
 func SearchDayFlag(day *time.Time) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if day == nil {
 			return
 		}
 		opts.has_day = true
 		opts.day = *day
-	}
+	}, fmt.Sprintf("api.SearchDay(time.Time %+v)}", day)}
 }
 
 func SearchToken(token string) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_token = true
 		opts.token = token
-	}
+	}, fmt.Sprintf("api.SearchToken(string %+v)}", token)}
 }
 func SearchTokenFlag(token *string) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if token == nil {
 			return
 		}
 		opts.has_token = true
 		opts.token = *token
-	}
+	}, fmt.Sprintf("api.SearchToken(string %+v)}", token)}
 }
 
 func SearchDebugBody(debugBody bool) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_debugBody = true
 		opts.debugBody = debugBody
-	}
+	}, fmt.Sprintf("api.SearchDebugBody(bool %+v)}", debugBody)}
 }
 func SearchDebugBodyFlag(debugBody *bool) SearchOption {
-	return func(opts *searchOptionImpl) {
+	return SearchOption{func(opts *searchOptionImpl) {
 		if debugBody == nil {
 			return
 		}
 		opts.has_debugBody = true
 		opts.debugBody = *debugBody
-	}
+	}, fmt.Sprintf("api.SearchDebugBody(bool %+v)}", debugBody)}
 }
 
 type searchOptionImpl struct {
@@ -245,15 +251,15 @@ func (o SearchParams) Options() []SearchOption {
 // ToBaseOptions converts SearchOption to an array of BaseOption
 func (o *searchOptionImpl) ToBaseOptions() []BaseOption {
 	return []BaseOption{
-		BaseToken(o.Token()),
 		BaseDebugBody(o.DebugBody()),
+		BaseToken(o.Token()),
 	}
 }
 
 func makeSearchOptionImpl(opts ...SearchOption) *searchOptionImpl {
 	res := &searchOptionImpl{}
 	for _, opt := range opts {
-		opt(res)
+		opt.f(res)
 	}
 	return res
 }

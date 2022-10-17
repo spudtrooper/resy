@@ -1,7 +1,14 @@
 // DO NOT EDIT MANUALLY: Generated from https://github.com/spudtrooper/genopts
 package api
 
-type VenueOption func(*venueOptionImpl)
+import "fmt"
+
+type VenueOption struct {
+	f func(*venueOptionImpl)
+	s string
+}
+
+func (o VenueOption) String() string { return o.s }
 
 type VenueOptions interface {
 	Token() string
@@ -12,35 +19,35 @@ type VenueOptions interface {
 }
 
 func VenueToken(token string) VenueOption {
-	return func(opts *venueOptionImpl) {
+	return VenueOption{func(opts *venueOptionImpl) {
 		opts.has_token = true
 		opts.token = token
-	}
+	}, fmt.Sprintf("api.VenueToken(string %+v)}", token)}
 }
 func VenueTokenFlag(token *string) VenueOption {
-	return func(opts *venueOptionImpl) {
+	return VenueOption{func(opts *venueOptionImpl) {
 		if token == nil {
 			return
 		}
 		opts.has_token = true
 		opts.token = *token
-	}
+	}, fmt.Sprintf("api.VenueToken(string %+v)}", token)}
 }
 
 func VenueDebugBody(debugBody bool) VenueOption {
-	return func(opts *venueOptionImpl) {
+	return VenueOption{func(opts *venueOptionImpl) {
 		opts.has_debugBody = true
 		opts.debugBody = debugBody
-	}
+	}, fmt.Sprintf("api.VenueDebugBody(bool %+v)}", debugBody)}
 }
 func VenueDebugBodyFlag(debugBody *bool) VenueOption {
-	return func(opts *venueOptionImpl) {
+	return VenueOption{func(opts *venueOptionImpl) {
 		if debugBody == nil {
 			return
 		}
 		opts.has_debugBody = true
 		opts.debugBody = *debugBody
-	}
+	}, fmt.Sprintf("api.VenueDebugBody(bool %+v)}", debugBody)}
 }
 
 type venueOptionImpl struct {
@@ -80,7 +87,7 @@ func (o *venueOptionImpl) ToBaseOptions() []BaseOption {
 func makeVenueOptionImpl(opts ...VenueOption) *venueOptionImpl {
 	res := &venueOptionImpl{}
 	for _, opt := range opts {
-		opt(res)
+		opt.f(res)
 	}
 	return res
 }
