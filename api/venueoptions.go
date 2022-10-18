@@ -79,8 +79,8 @@ func (o VenueParams) Options() []VenueOption {
 // ToBaseOptions converts VenueOption to an array of BaseOption
 func (o *venueOptionImpl) ToBaseOptions() []BaseOption {
 	return []BaseOption{
-		BaseDebugBody(o.DebugBody()),
 		BaseToken(o.Token()),
+		BaseDebugBody(o.DebugBody()),
 	}
 }
 
