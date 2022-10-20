@@ -251,8 +251,8 @@ func (o SearchParams) Options() []SearchOption {
 // ToBaseOptions converts SearchOption to an array of BaseOption
 func (o *searchOptionImpl) ToBaseOptions() []BaseOption {
 	return []BaseOption{
-		BaseToken(o.Token()),
 		BaseDebugBody(o.DebugBody()),
+		BaseToken(o.Token()),
 	}
 }
 
