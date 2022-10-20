@@ -16,33 +16,33 @@ type CalendarOption struct {
 func (o CalendarOption) String() string { return o.s }
 
 type CalendarOptions interface {
-	StartDate() time.Time
-	HasStartDate() bool
+	DebugBody() bool
+	HasDebugBody() bool
 	EndDate() time.Time
 	HasEndDate() bool
 	NumSeats() int
 	HasNumSeats() bool
+	StartDate() time.Time
+	HasStartDate() bool
 	Token() string
 	HasToken() bool
-	DebugBody() bool
-	HasDebugBody() bool
 	ToBaseOptions() []BaseOption
 }
 
-func CalendarStartDate(startDate time.Time) CalendarOption {
+func CalendarDebugBody(debugBody bool) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
-		opts.has_startDate = true
-		opts.startDate = startDate
-	}, fmt.Sprintf("api.CalendarStartDate(time.Time %+v)}", startDate)}
+		opts.has_debugBody = true
+		opts.debugBody = debugBody
+	}, fmt.Sprintf("api.CalendarDebugBody(bool %+v)}", debugBody)}
 }
-func CalendarStartDateFlag(startDate *time.Time) CalendarOption {
+func CalendarDebugBodyFlag(debugBody *bool) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
-		if startDate == nil {
+		if debugBody == nil {
 			return
 		}
-		opts.has_startDate = true
-		opts.startDate = *startDate
-	}, fmt.Sprintf("api.CalendarStartDate(time.Time %+v)}", startDate)}
+		opts.has_debugBody = true
+		opts.debugBody = *debugBody
+	}, fmt.Sprintf("api.CalendarDebugBody(bool %+v)}", debugBody)}
 }
 
 func CalendarEndDate(endDate time.Time) CalendarOption {
@@ -77,6 +77,22 @@ func CalendarNumSeatsFlag(numSeats *int) CalendarOption {
 	}, fmt.Sprintf("api.CalendarNumSeats(int %+v)}", numSeats)}
 }
 
+func CalendarStartDate(startDate time.Time) CalendarOption {
+	return CalendarOption{func(opts *calendarOptionImpl) {
+		opts.has_startDate = true
+		opts.startDate = startDate
+	}, fmt.Sprintf("api.CalendarStartDate(time.Time %+v)}", startDate)}
+}
+func CalendarStartDateFlag(startDate *time.Time) CalendarOption {
+	return CalendarOption{func(opts *calendarOptionImpl) {
+		if startDate == nil {
+			return
+		}
+		opts.has_startDate = true
+		opts.startDate = *startDate
+	}, fmt.Sprintf("api.CalendarStartDate(time.Time %+v)}", startDate)}
+}
+
 func CalendarToken(token string) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
 		opts.has_token = true
@@ -93,22 +109,6 @@ func CalendarTokenFlag(token *string) CalendarOption {
 	}, fmt.Sprintf("api.CalendarToken(string %+v)}", token)}
 }
 
-func CalendarDebugBody(debugBody bool) CalendarOption {
-	return CalendarOption{func(opts *calendarOptionImpl) {
-		opts.has_debugBody = true
-		opts.debugBody = debugBody
-	}, fmt.Sprintf("api.CalendarDebugBody(bool %+v)}", debugBody)}
-}
-func CalendarDebugBodyFlag(debugBody *bool) CalendarOption {
-	return CalendarOption{func(opts *calendarOptionImpl) {
-		if debugBody == nil {
-			return
-		}
-		opts.has_debugBody = true
-		opts.debugBody = *debugBody
-	}, fmt.Sprintf("api.CalendarDebugBody(bool %+v)}", debugBody)}
-}
-
 type calendarOptionImpl struct {
 	startDate     time.Time
 	has_startDate bool
@@ -122,33 +122,33 @@ type calendarOptionImpl struct {
 	has_debugBody bool
 }
 
-func (c *calendarOptionImpl) StartDate() time.Time { return c.startDate }
-func (c *calendarOptionImpl) HasStartDate() bool   { return c.has_startDate }
+func (c *calendarOptionImpl) DebugBody() bool      { return c.debugBody }
+func (c *calendarOptionImpl) HasDebugBody() bool   { return c.has_debugBody }
 func (c *calendarOptionImpl) EndDate() time.Time   { return c.endDate }
 func (c *calendarOptionImpl) HasEndDate() bool     { return c.has_endDate }
 func (c *calendarOptionImpl) NumSeats() int        { return or.Int(c.numSeats, 2) }
 func (c *calendarOptionImpl) HasNumSeats() bool    { return c.has_numSeats }
+func (c *calendarOptionImpl) StartDate() time.Time { return c.startDate }
+func (c *calendarOptionImpl) HasStartDate() bool   { return c.has_startDate }
 func (c *calendarOptionImpl) Token() string        { return c.token }
 func (c *calendarOptionImpl) HasToken() bool       { return c.has_token }
-func (c *calendarOptionImpl) DebugBody() bool      { return c.debugBody }
-func (c *calendarOptionImpl) HasDebugBody() bool   { return c.has_debugBody }
 
 type CalendarParams struct {
-	VenueID   int       `json:"venue_id" required:"true"`
-	StartDate time.Time `json:"start_date"`
+	DebugBody bool      `json:"debug_body"`
 	EndDate   time.Time `json:"end_date"`
 	NumSeats  int       `json:"num_seats" default:"2"`
+	StartDate time.Time `json:"start_date"`
 	Token     string    `json:"token"`
-	DebugBody bool      `json:"debug_body"`
+	VenueID   int       `json:"venue_id" required:"true"`
 }
 
 func (o CalendarParams) Options() []CalendarOption {
 	return []CalendarOption{
-		CalendarStartDate(o.StartDate),
+		CalendarDebugBody(o.DebugBody),
 		CalendarEndDate(o.EndDate),
 		CalendarNumSeats(o.NumSeats),
+		CalendarStartDate(o.StartDate),
 		CalendarToken(o.Token),
-		CalendarDebugBody(o.DebugBody),
 	}
 }
 

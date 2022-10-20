@@ -11,27 +11,11 @@ type VenueOption struct {
 func (o VenueOption) String() string { return o.s }
 
 type VenueOptions interface {
-	Token() string
-	HasToken() bool
 	DebugBody() bool
 	HasDebugBody() bool
+	Token() string
+	HasToken() bool
 	ToBaseOptions() []BaseOption
-}
-
-func VenueToken(token string) VenueOption {
-	return VenueOption{func(opts *venueOptionImpl) {
-		opts.has_token = true
-		opts.token = token
-	}, fmt.Sprintf("api.VenueToken(string %+v)}", token)}
-}
-func VenueTokenFlag(token *string) VenueOption {
-	return VenueOption{func(opts *venueOptionImpl) {
-		if token == nil {
-			return
-		}
-		opts.has_token = true
-		opts.token = *token
-	}, fmt.Sprintf("api.VenueToken(string %+v)}", token)}
 }
 
 func VenueDebugBody(debugBody bool) VenueOption {
@@ -50,6 +34,22 @@ func VenueDebugBodyFlag(debugBody *bool) VenueOption {
 	}, fmt.Sprintf("api.VenueDebugBody(bool %+v)}", debugBody)}
 }
 
+func VenueToken(token string) VenueOption {
+	return VenueOption{func(opts *venueOptionImpl) {
+		opts.has_token = true
+		opts.token = token
+	}, fmt.Sprintf("api.VenueToken(string %+v)}", token)}
+}
+func VenueTokenFlag(token *string) VenueOption {
+	return VenueOption{func(opts *venueOptionImpl) {
+		if token == nil {
+			return
+		}
+		opts.has_token = true
+		opts.token = *token
+	}, fmt.Sprintf("api.VenueToken(string %+v)}", token)}
+}
+
 type venueOptionImpl struct {
 	token         string
 	has_token     bool
@@ -57,22 +57,22 @@ type venueOptionImpl struct {
 	has_debugBody bool
 }
 
-func (v *venueOptionImpl) Token() string      { return v.token }
-func (v *venueOptionImpl) HasToken() bool     { return v.has_token }
 func (v *venueOptionImpl) DebugBody() bool    { return v.debugBody }
 func (v *venueOptionImpl) HasDebugBody() bool { return v.has_debugBody }
+func (v *venueOptionImpl) Token() string      { return v.token }
+func (v *venueOptionImpl) HasToken() bool     { return v.has_token }
 
 type VenueParams struct {
-	UrlSlug   string `json:"url_slug" required:"true"`
+	DebugBody bool   `json:"debug_body"`
 	Location  string `json:"location" required:"true"`
 	Token     string `json:"token"`
-	DebugBody bool   `json:"debug_body"`
+	UrlSlug   string `json:"url_slug" required:"true"`
 }
 
 func (o VenueParams) Options() []VenueOption {
 	return []VenueOption{
-		VenueToken(o.Token),
 		VenueDebugBody(o.DebugBody),
+		VenueToken(o.Token),
 	}
 }
 

@@ -11,27 +11,11 @@ type ConfigOption struct {
 func (o ConfigOption) String() string { return o.s }
 
 type ConfigOptions interface {
-	Token() string
-	HasToken() bool
 	DebugBody() bool
 	HasDebugBody() bool
+	Token() string
+	HasToken() bool
 	ToBaseOptions() []BaseOption
-}
-
-func ConfigToken(token string) ConfigOption {
-	return ConfigOption{func(opts *configOptionImpl) {
-		opts.has_token = true
-		opts.token = token
-	}, fmt.Sprintf("api.ConfigToken(string %+v)}", token)}
-}
-func ConfigTokenFlag(token *string) ConfigOption {
-	return ConfigOption{func(opts *configOptionImpl) {
-		if token == nil {
-			return
-		}
-		opts.has_token = true
-		opts.token = *token
-	}, fmt.Sprintf("api.ConfigToken(string %+v)}", token)}
 }
 
 func ConfigDebugBody(debugBody bool) ConfigOption {
@@ -50,6 +34,22 @@ func ConfigDebugBodyFlag(debugBody *bool) ConfigOption {
 	}, fmt.Sprintf("api.ConfigDebugBody(bool %+v)}", debugBody)}
 }
 
+func ConfigToken(token string) ConfigOption {
+	return ConfigOption{func(opts *configOptionImpl) {
+		opts.has_token = true
+		opts.token = token
+	}, fmt.Sprintf("api.ConfigToken(string %+v)}", token)}
+}
+func ConfigTokenFlag(token *string) ConfigOption {
+	return ConfigOption{func(opts *configOptionImpl) {
+		if token == nil {
+			return
+		}
+		opts.has_token = true
+		opts.token = *token
+	}, fmt.Sprintf("api.ConfigToken(string %+v)}", token)}
+}
+
 type configOptionImpl struct {
 	token         string
 	has_token     bool
@@ -57,21 +57,21 @@ type configOptionImpl struct {
 	has_debugBody bool
 }
 
-func (c *configOptionImpl) Token() string      { return c.token }
-func (c *configOptionImpl) HasToken() bool     { return c.has_token }
 func (c *configOptionImpl) DebugBody() bool    { return c.debugBody }
 func (c *configOptionImpl) HasDebugBody() bool { return c.has_debugBody }
+func (c *configOptionImpl) Token() string      { return c.token }
+func (c *configOptionImpl) HasToken() bool     { return c.has_token }
 
 type ConfigParams struct {
-	VenueID   int    `json:"venue_id" required:"true"`
-	Token     string `json:"token"`
 	DebugBody bool   `json:"debug_body"`
+	Token     string `json:"token"`
+	VenueID   int    `json:"venue_id" required:"true"`
 }
 
 func (o ConfigParams) Options() []ConfigOption {
 	return []ConfigOption{
-		ConfigToken(o.Token),
 		ConfigDebugBody(o.DebugBody),
+		ConfigToken(o.Token),
 	}
 }
 
