@@ -182,24 +182,24 @@ func SearchTokenFlag(token *string) SearchOption {
 }
 
 type searchOptionImpl struct {
-	partySize     int
-	has_partySize bool
-	page          int
-	has_page      bool
-	perPage       int
-	has_perPage   bool
+	day           time.Time
+	has_day       bool
+	debugBody     bool
+	has_debugBody bool
 	latitude      float64
 	has_latitude  bool
 	longitude     float64
 	has_longitude bool
+	page          int
+	has_page      bool
+	partySize     int
+	has_partySize bool
+	perPage       int
+	has_perPage   bool
 	radius        int
 	has_radius    bool
-	day           time.Time
-	has_day       bool
 	token         string
 	has_token     bool
-	debugBody     bool
-	has_debugBody bool
 }
 
 func (s *searchOptionImpl) Day() time.Time     { return s.day }

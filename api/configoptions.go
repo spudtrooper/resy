@@ -51,10 +51,10 @@ func ConfigTokenFlag(token *string) ConfigOption {
 }
 
 type configOptionImpl struct {
-	token         string
-	has_token     bool
 	debugBody     bool
 	has_debugBody bool
+	token         string
+	has_token     bool
 }
 
 func (c *configOptionImpl) DebugBody() bool    { return c.debugBody }

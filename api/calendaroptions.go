@@ -110,16 +110,16 @@ func CalendarTokenFlag(token *string) CalendarOption {
 }
 
 type calendarOptionImpl struct {
-	startDate     time.Time
-	has_startDate bool
+	debugBody     bool
+	has_debugBody bool
 	endDate       time.Time
 	has_endDate   bool
 	numSeats      int
 	has_numSeats  bool
+	startDate     time.Time
+	has_startDate bool
 	token         string
 	has_token     bool
-	debugBody     bool
-	has_debugBody bool
 }
 
 func (c *calendarOptionImpl) DebugBody() bool      { return c.debugBody }

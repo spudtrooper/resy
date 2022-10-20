@@ -51,10 +51,10 @@ func VenueTokenFlag(token *string) VenueOption {
 }
 
 type venueOptionImpl struct {
-	token         string
-	has_token     bool
 	debugBody     bool
 	has_debugBody bool
+	token         string
+	has_token     bool
 }
 
 func (v *venueOptionImpl) DebugBody() bool    { return v.debugBody }

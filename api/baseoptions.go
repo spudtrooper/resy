@@ -50,10 +50,10 @@ func BaseTokenFlag(token *string) BaseOption {
 }
 
 type baseOptionImpl struct {
-	token         string
-	has_token     bool
 	debugBody     bool
 	has_debugBody bool
+	token         string
+	has_token     bool
 }
 
 func (b *baseOptionImpl) DebugBody() bool    { return b.debugBody }
