@@ -155,8 +155,8 @@ func (o CalendarParams) Options() []CalendarOption {
 // ToBaseOptions converts CalendarOption to an array of BaseOption
 func (o *calendarOptionImpl) ToBaseOptions() []BaseOption {
 	return []BaseOption{
-		BaseToken(o.Token()),
 		BaseDebugBody(o.DebugBody()),
+		BaseToken(o.Token()),
 	}
 }
 
