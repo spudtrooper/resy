@@ -78,8 +78,8 @@ func (o ConfigParams) Options() []ConfigOption {
 // ToBaseOptions converts ConfigOption to an array of BaseOption
 func (o *configOptionImpl) ToBaseOptions() []BaseOption {
 	return []BaseOption{
-		BaseToken(o.Token()),
 		BaseDebugBody(o.DebugBody()),
+		BaseToken(o.Token()),
 	}
 }
 
