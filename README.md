@@ -6,7 +6,7 @@ Go client API for http://resy.com
 
 ### Deployed frontend
 
-https://unofficial-resy-api.herokuapp.com/
+https://api-dumpster-fire.herokuapp.com/resy
 
 ### Running local front end
 
