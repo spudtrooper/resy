@@ -33,7 +33,7 @@ func CalendarDebugBody(debugBody bool) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
 		opts.has_debugBody = true
 		opts.debugBody = debugBody
-	}, fmt.Sprintf("api.CalendarDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.CalendarDebugBody(bool %+v)", debugBody)}
 }
 func CalendarDebugBodyFlag(debugBody *bool) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
@@ -42,14 +42,14 @@ func CalendarDebugBodyFlag(debugBody *bool) CalendarOption {
 		}
 		opts.has_debugBody = true
 		opts.debugBody = *debugBody
-	}, fmt.Sprintf("api.CalendarDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.CalendarDebugBody(bool %+v)", debugBody)}
 }
 
 func CalendarEndDate(endDate time.Time) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
 		opts.has_endDate = true
 		opts.endDate = endDate
-	}, fmt.Sprintf("api.CalendarEndDate(time.Time %+v)}", endDate)}
+	}, fmt.Sprintf("api.CalendarEndDate(time.Time %+v)", endDate)}
 }
 func CalendarEndDateFlag(endDate *time.Time) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
@@ -58,14 +58,14 @@ func CalendarEndDateFlag(endDate *time.Time) CalendarOption {
 		}
 		opts.has_endDate = true
 		opts.endDate = *endDate
-	}, fmt.Sprintf("api.CalendarEndDate(time.Time %+v)}", endDate)}
+	}, fmt.Sprintf("api.CalendarEndDate(time.Time %+v)", endDate)}
 }
 
 func CalendarNumSeats(numSeats int) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
 		opts.has_numSeats = true
 		opts.numSeats = numSeats
-	}, fmt.Sprintf("api.CalendarNumSeats(int %+v)}", numSeats)}
+	}, fmt.Sprintf("api.CalendarNumSeats(int %+v)", numSeats)}
 }
 func CalendarNumSeatsFlag(numSeats *int) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
@@ -74,14 +74,14 @@ func CalendarNumSeatsFlag(numSeats *int) CalendarOption {
 		}
 		opts.has_numSeats = true
 		opts.numSeats = *numSeats
-	}, fmt.Sprintf("api.CalendarNumSeats(int %+v)}", numSeats)}
+	}, fmt.Sprintf("api.CalendarNumSeats(int %+v)", numSeats)}
 }
 
 func CalendarStartDate(startDate time.Time) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
 		opts.has_startDate = true
 		opts.startDate = startDate
-	}, fmt.Sprintf("api.CalendarStartDate(time.Time %+v)}", startDate)}
+	}, fmt.Sprintf("api.CalendarStartDate(time.Time %+v)", startDate)}
 }
 func CalendarStartDateFlag(startDate *time.Time) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
@@ -90,14 +90,14 @@ func CalendarStartDateFlag(startDate *time.Time) CalendarOption {
 		}
 		opts.has_startDate = true
 		opts.startDate = *startDate
-	}, fmt.Sprintf("api.CalendarStartDate(time.Time %+v)}", startDate)}
+	}, fmt.Sprintf("api.CalendarStartDate(time.Time %+v)", startDate)}
 }
 
 func CalendarToken(token string) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
 		opts.has_token = true
 		opts.token = token
-	}, fmt.Sprintf("api.CalendarToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.CalendarToken(string %+v)", token)}
 }
 func CalendarTokenFlag(token *string) CalendarOption {
 	return CalendarOption{func(opts *calendarOptionImpl) {
@@ -106,7 +106,7 @@ func CalendarTokenFlag(token *string) CalendarOption {
 		}
 		opts.has_token = true
 		opts.token = *token
-	}, fmt.Sprintf("api.CalendarToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.CalendarToken(string %+v)", token)}
 }
 
 type calendarOptionImpl struct {

@@ -21,7 +21,7 @@ func BaseDebugBody(debugBody bool) BaseOption {
 	return BaseOption{func(opts *baseOptionImpl) {
 		opts.has_debugBody = true
 		opts.debugBody = debugBody
-	}, fmt.Sprintf("api.BaseDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.BaseDebugBody(bool %+v)", debugBody)}
 }
 func BaseDebugBodyFlag(debugBody *bool) BaseOption {
 	return BaseOption{func(opts *baseOptionImpl) {
@@ -30,14 +30,14 @@ func BaseDebugBodyFlag(debugBody *bool) BaseOption {
 		}
 		opts.has_debugBody = true
 		opts.debugBody = *debugBody
-	}, fmt.Sprintf("api.BaseDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.BaseDebugBody(bool %+v)", debugBody)}
 }
 
 func BaseToken(token string) BaseOption {
 	return BaseOption{func(opts *baseOptionImpl) {
 		opts.has_token = true
 		opts.token = token
-	}, fmt.Sprintf("api.BaseToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.BaseToken(string %+v)", token)}
 }
 func BaseTokenFlag(token *string) BaseOption {
 	return BaseOption{func(opts *baseOptionImpl) {
@@ -46,7 +46,7 @@ func BaseTokenFlag(token *string) BaseOption {
 		}
 		opts.has_token = true
 		opts.token = *token
-	}, fmt.Sprintf("api.BaseToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.BaseToken(string %+v)", token)}
 }
 
 type baseOptionImpl struct {

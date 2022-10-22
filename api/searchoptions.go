@@ -41,7 +41,7 @@ func SearchDay(day time.Time) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_day = true
 		opts.day = day
-	}, fmt.Sprintf("api.SearchDay(time.Time %+v)}", day)}
+	}, fmt.Sprintf("api.SearchDay(time.Time %+v)", day)}
 }
 func SearchDayFlag(day *time.Time) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -50,14 +50,14 @@ func SearchDayFlag(day *time.Time) SearchOption {
 		}
 		opts.has_day = true
 		opts.day = *day
-	}, fmt.Sprintf("api.SearchDay(time.Time %+v)}", day)}
+	}, fmt.Sprintf("api.SearchDay(time.Time %+v)", day)}
 }
 
 func SearchDebugBody(debugBody bool) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_debugBody = true
 		opts.debugBody = debugBody
-	}, fmt.Sprintf("api.SearchDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.SearchDebugBody(bool %+v)", debugBody)}
 }
 func SearchDebugBodyFlag(debugBody *bool) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -66,14 +66,14 @@ func SearchDebugBodyFlag(debugBody *bool) SearchOption {
 		}
 		opts.has_debugBody = true
 		opts.debugBody = *debugBody
-	}, fmt.Sprintf("api.SearchDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.SearchDebugBody(bool %+v)", debugBody)}
 }
 
 func SearchLatitude(latitude float64) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_latitude = true
 		opts.latitude = latitude
-	}, fmt.Sprintf("api.SearchLatitude(float64 %+v)}", latitude)}
+	}, fmt.Sprintf("api.SearchLatitude(float64 %+v)", latitude)}
 }
 func SearchLatitudeFlag(latitude *float64) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -82,14 +82,14 @@ func SearchLatitudeFlag(latitude *float64) SearchOption {
 		}
 		opts.has_latitude = true
 		opts.latitude = *latitude
-	}, fmt.Sprintf("api.SearchLatitude(float64 %+v)}", latitude)}
+	}, fmt.Sprintf("api.SearchLatitude(float64 %+v)", latitude)}
 }
 
 func SearchLongitude(longitude float64) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_longitude = true
 		opts.longitude = longitude
-	}, fmt.Sprintf("api.SearchLongitude(float64 %+v)}", longitude)}
+	}, fmt.Sprintf("api.SearchLongitude(float64 %+v)", longitude)}
 }
 func SearchLongitudeFlag(longitude *float64) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -98,14 +98,14 @@ func SearchLongitudeFlag(longitude *float64) SearchOption {
 		}
 		opts.has_longitude = true
 		opts.longitude = *longitude
-	}, fmt.Sprintf("api.SearchLongitude(float64 %+v)}", longitude)}
+	}, fmt.Sprintf("api.SearchLongitude(float64 %+v)", longitude)}
 }
 
 func SearchPage(page int) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_page = true
 		opts.page = page
-	}, fmt.Sprintf("api.SearchPage(int %+v)}", page)}
+	}, fmt.Sprintf("api.SearchPage(int %+v)", page)}
 }
 func SearchPageFlag(page *int) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -114,14 +114,14 @@ func SearchPageFlag(page *int) SearchOption {
 		}
 		opts.has_page = true
 		opts.page = *page
-	}, fmt.Sprintf("api.SearchPage(int %+v)}", page)}
+	}, fmt.Sprintf("api.SearchPage(int %+v)", page)}
 }
 
 func SearchPartySize(partySize int) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_partySize = true
 		opts.partySize = partySize
-	}, fmt.Sprintf("api.SearchPartySize(int %+v)}", partySize)}
+	}, fmt.Sprintf("api.SearchPartySize(int %+v)", partySize)}
 }
 func SearchPartySizeFlag(partySize *int) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -130,14 +130,14 @@ func SearchPartySizeFlag(partySize *int) SearchOption {
 		}
 		opts.has_partySize = true
 		opts.partySize = *partySize
-	}, fmt.Sprintf("api.SearchPartySize(int %+v)}", partySize)}
+	}, fmt.Sprintf("api.SearchPartySize(int %+v)", partySize)}
 }
 
 func SearchPerPage(perPage int) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_perPage = true
 		opts.perPage = perPage
-	}, fmt.Sprintf("api.SearchPerPage(int %+v)}", perPage)}
+	}, fmt.Sprintf("api.SearchPerPage(int %+v)", perPage)}
 }
 func SearchPerPageFlag(perPage *int) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -146,14 +146,14 @@ func SearchPerPageFlag(perPage *int) SearchOption {
 		}
 		opts.has_perPage = true
 		opts.perPage = *perPage
-	}, fmt.Sprintf("api.SearchPerPage(int %+v)}", perPage)}
+	}, fmt.Sprintf("api.SearchPerPage(int %+v)", perPage)}
 }
 
 func SearchRadius(radius int) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_radius = true
 		opts.radius = radius
-	}, fmt.Sprintf("api.SearchRadius(int %+v)}", radius)}
+	}, fmt.Sprintf("api.SearchRadius(int %+v)", radius)}
 }
 func SearchRadiusFlag(radius *int) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -162,14 +162,14 @@ func SearchRadiusFlag(radius *int) SearchOption {
 		}
 		opts.has_radius = true
 		opts.radius = *radius
-	}, fmt.Sprintf("api.SearchRadius(int %+v)}", radius)}
+	}, fmt.Sprintf("api.SearchRadius(int %+v)", radius)}
 }
 
 func SearchToken(token string) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
 		opts.has_token = true
 		opts.token = token
-	}, fmt.Sprintf("api.SearchToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.SearchToken(string %+v)", token)}
 }
 func SearchTokenFlag(token *string) SearchOption {
 	return SearchOption{func(opts *searchOptionImpl) {
@@ -178,7 +178,7 @@ func SearchTokenFlag(token *string) SearchOption {
 		}
 		opts.has_token = true
 		opts.token = *token
-	}, fmt.Sprintf("api.SearchToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.SearchToken(string %+v)", token)}
 }
 
 type searchOptionImpl struct {

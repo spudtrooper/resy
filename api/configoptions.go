@@ -22,7 +22,7 @@ func ConfigDebugBody(debugBody bool) ConfigOption {
 	return ConfigOption{func(opts *configOptionImpl) {
 		opts.has_debugBody = true
 		opts.debugBody = debugBody
-	}, fmt.Sprintf("api.ConfigDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.ConfigDebugBody(bool %+v)", debugBody)}
 }
 func ConfigDebugBodyFlag(debugBody *bool) ConfigOption {
 	return ConfigOption{func(opts *configOptionImpl) {
@@ -31,14 +31,14 @@ func ConfigDebugBodyFlag(debugBody *bool) ConfigOption {
 		}
 		opts.has_debugBody = true
 		opts.debugBody = *debugBody
-	}, fmt.Sprintf("api.ConfigDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.ConfigDebugBody(bool %+v)", debugBody)}
 }
 
 func ConfigToken(token string) ConfigOption {
 	return ConfigOption{func(opts *configOptionImpl) {
 		opts.has_token = true
 		opts.token = token
-	}, fmt.Sprintf("api.ConfigToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.ConfigToken(string %+v)", token)}
 }
 func ConfigTokenFlag(token *string) ConfigOption {
 	return ConfigOption{func(opts *configOptionImpl) {
@@ -47,7 +47,7 @@ func ConfigTokenFlag(token *string) ConfigOption {
 		}
 		opts.has_token = true
 		opts.token = *token
-	}, fmt.Sprintf("api.ConfigToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.ConfigToken(string %+v)", token)}
 }
 
 type configOptionImpl struct {

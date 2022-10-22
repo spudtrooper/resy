@@ -22,7 +22,7 @@ func VenueDebugBody(debugBody bool) VenueOption {
 	return VenueOption{func(opts *venueOptionImpl) {
 		opts.has_debugBody = true
 		opts.debugBody = debugBody
-	}, fmt.Sprintf("api.VenueDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.VenueDebugBody(bool %+v)", debugBody)}
 }
 func VenueDebugBodyFlag(debugBody *bool) VenueOption {
 	return VenueOption{func(opts *venueOptionImpl) {
@@ -31,14 +31,14 @@ func VenueDebugBodyFlag(debugBody *bool) VenueOption {
 		}
 		opts.has_debugBody = true
 		opts.debugBody = *debugBody
-	}, fmt.Sprintf("api.VenueDebugBody(bool %+v)}", debugBody)}
+	}, fmt.Sprintf("api.VenueDebugBody(bool %+v)", debugBody)}
 }
 
 func VenueToken(token string) VenueOption {
 	return VenueOption{func(opts *venueOptionImpl) {
 		opts.has_token = true
 		opts.token = token
-	}, fmt.Sprintf("api.VenueToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.VenueToken(string %+v)", token)}
 }
 func VenueTokenFlag(token *string) VenueOption {
 	return VenueOption{func(opts *venueOptionImpl) {
@@ -47,7 +47,7 @@ func VenueTokenFlag(token *string) VenueOption {
 		}
 		opts.has_token = true
 		opts.token = *token
-	}, fmt.Sprintf("api.VenueToken(string %+v)}", token)}
+	}, fmt.Sprintf("api.VenueToken(string %+v)", token)}
 }
 
 type venueOptionImpl struct {
